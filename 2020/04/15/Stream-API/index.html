@@ -15,7 +15,7 @@
     <meta name="description" content="在第二章中，我们通过学习lambda表达式，了解了如何能够在不创建额外类的情况下传递行为来帮助我们编写出简洁精练的代码。lambda表达式是一种通过使用函数式接口让开发者能够快速表达他们的想法的语言概念。设计API的时候将lambda，也就是那些使用了函数式接口的流畅的API（我们在lambdas章节中讨论过它们）记在脑子中，我们才能真正体验到lambda的强大。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8-Stream API">
-<meta property="og:url" content="http://ysocks.gitee.io/2020/04/15/Stream-API/index.html">
+<meta property="og:url" content="http://ysocket.pages.dev/2020/04/15/Stream-API/index.html">
 <meta property="og:site_name" content="YSocket's Blog">
 <meta property="og:description" content="在第二章中，我们通过学习lambda表达式，了解了如何能够在不创建额外类的情况下传递行为来帮助我们编写出简洁精练的代码。lambda表达式是一种通过使用函数式接口让开发者能够快速表达他们的想法的语言概念。设计API的时候将lambda，也就是那些使用了函数式接口的流畅的API（我们在lambdas章节中讨论过它们）记在脑子中，我们才能真正体验到lambda的强大。">
 <meta property="og:locale" content="zh_CN">
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"ysocks.gitee.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2025-06-16T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"ysocket.pages.dev","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2025-06-16T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -104,7 +104,7 @@ html ol > hanla,
 html ul > hanla {
     display: none;
 }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="YSocket's Blog" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="YSocket's Blog" type="application/atom+xml">
 </head>
 
 
@@ -380,7 +380,7 @@ html ul > hanla {
 <li><strong>filter</strong>：允许你指定一个断言来从数据流中排除一些元素。断言<hanla></hanla><strong>task-&gt;task.getType() ==TaskType.READING</strong><hanla></hanla>选择了所有任务类型为<hanla></hanla><code>READING</code><hanla></hanla>的任务。</li>
 <li><strong>sorted</strong>：允许你指定一个比较器来对数据流进行排序。在这个例子中，你根据创建的日期来进行排序。lambda<hanla></hanla>表达式<hanla></hanla>**(t1,t2)-&gt;t1.getCreatedOn().compareTo(t2.getCreatedOn())** 提供了<hanla></hanla><code>Comparator</code><hanla></hanla>函数式接口的<hanla></hanla><code>compare</code><hanla></hanla>方法的实现。</li>
 <li><strong>map</strong>：这需要一个实现了<hanla></hanla><code>Function&lt;? super T, ? extends R&gt;</code><hanla></hanla>接口的<hanla></hanla>lambda<hanla></hanla>表达式来将一个数据流转化为另一个数据流。lambda<hanla></hanla>表达式<hanla></hanla>**task-&gt;task.getTitle()**<hanla></hanla>将一个任务转化为一个标题。</li>
-<li>**collect(toList())**：这是一个结束操作，它收集结果中的阅读任务的标题并放入列表。</li>
+<li><strong>collect(toList())</strong>：这是一个结束操作，它收集结果中的阅读任务的标题并放入列表。</li>
 </ul>
 <p>我们可以像下面一样通过使用<hanla></hanla><code>Comparator</code><hanla></hanla>接口的<hanla></hanla><code>comparing</code><hanla></hanla>方法和方法引用来优化上面的<hanla></hanla>Java8<hanla></hanla>代码。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title function_">allReadingTasks</span><span class="hljs-params">(List&lt;Task&gt; tasks)</span> {<br>    <span class="hljs-keyword">return</span> tasks.stream().<br>            filter(task -&gt; task.getType() == TaskType.READING).<br>            sorted(Comparator.comparing(Task::getCreatedOn)).<br>            map(Task::getTitle).<br>            collect(Collectors.toList());<br><br>}<br></code></pre></td></tr></tbody></table></figure>
@@ -503,7 +503,7 @@ html ul > hanla {
   <div class="license-box my-3">
     <div class="license-title">
       <div>Java8-Stream API</div>
-      <div>http://ysocks.gitee.io/2020/04/15/Stream-API/</div>
+      <div>http://ysocket.pages.dev/2020/04/15/Stream-API/</div>
     </div>
     <div class="license-meta">
       

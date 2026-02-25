@@ -15,7 +15,7 @@
     <meta name="description" content="在第二天，你已经学习了Stream API能够让你以声明式的方式帮助你处理集合。我们看到collect是一个将管道流的结果集到一个list中的结束操作。collect是一个将数据流缩减为一个值的归约操作。这个值可以是集合、映射，或者一个值对象。你可以使用collect达到以下目的：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8-Collectors">
-<meta property="og:url" content="http://ysocks.gitee.io/2020/04/16/Collectors/index.html">
+<meta property="og:url" content="http://ysocket.pages.dev/2020/04/16/Collectors/index.html">
 <meta property="og:site_name" content="YSocket's Blog">
 <meta property="og:description" content="在第二天，你已经学习了Stream API能够让你以声明式的方式帮助你处理集合。我们看到collect是一个将管道流的结果集到一个list中的结束操作。collect是一个将数据流缩减为一个值的归约操作。这个值可以是集合、映射，或者一个值对象。你可以使用collect达到以下目的：">
 <meta property="og:locale" content="zh_CN">
@@ -67,7 +67,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"ysocks.gitee.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2025-06-16T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"ysocket.pages.dev","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2025-06-16T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -101,7 +101,7 @@ html ol > hanla,
 html ul > hanla {
     display: none;
 }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="YSocket's Blog" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="YSocket's Blog" type="application/atom+xml">
 </head>
 
 
@@ -293,11 +293,11 @@ html ul > hanla {
                 <p><hanla></hanla>在<a href="./2020/04/15/Stream-API/">第二天</a>，你已经学习了<hanla></hanla>Stream API<hanla></hanla>能够让你以声明式的方式帮助你处理集合。我们看到<hanla></hanla><code>collect</code><hanla></hanla>是一个将管道流的结果集到一个<hanla></hanla><code>list</code><hanla></hanla>中的结束操作。<code>collect</code><hanla></hanla>是一个将数据流缩减为一个值的归约操作。这个值可以是集合、映射，或者一个值对象。你可以使用<hanla></hanla><code>collect</code><hanla></hanla>达到以下目的：</p>
 <span id="more"></span>
 <ol>
-<li><p><strong>将数据流缩减为一个单一值：</strong>一个流执行后的结果能够被缩减为一个单一的值。单一的值可以是一个<hanla></hanla><code>Collection</code>，或者像<hanla></hanla>int、double<hanla></hanla>等的数值，再或者是一个用户自定义的值对象。</p>
+<li><p>**<hanla></hanla>将数据流缩减为一个单一值：**<hanla></hanla>一个流执行后的结果能够被缩减为一个单一的值。单一的值可以是一个<hanla></hanla><code>Collection</code>，或者像<hanla></hanla>int、double<hanla></hanla>等的数值，再或者是一个用户自定义的值对象。</p>
 </li>
-<li><p><strong>将一个数据流中的元素进行分组：</strong>根据任务类型将流中所有的任务进行分组。这将产生一个<hanla></hanla><code>Map&lt;TaskType, List&lt;Task&gt;&gt;</code><hanla></hanla>的结果，其中每个实体包含一个任务类型以及与它相关的任务。你也可以使用除了列表以外的任何其他的集合。如果你不需要与一任务类型相关的所有的任务，你可以选择产生一个<hanla></hanla><code>Map&lt;TaskType, Task&gt;</code>。这是一个能够根据任务类型对任务进行分类并获取每类任务中第一个任务的例子。</p>
+<li><p>**<hanla></hanla>将一个数据流中的元素进行分组：**<hanla></hanla>根据任务类型将流中所有的任务进行分组。这将产生一个<hanla></hanla><code>Map&lt;TaskType, List&lt;Task&gt;&gt;</code><hanla></hanla>的结果，其中每个实体包含一个任务类型以及与它相关的任务。你也可以使用除了列表以外的任何其他的集合。如果你不需要与一任务类型相关的所有的任务，你可以选择产生一个<hanla></hanla><code>Map&lt;TaskType, Task&gt;</code>。这是一个能够根据任务类型对任务进行分类并获取每类任务中第一个任务的例子。</p>
 </li>
-<li><p><strong>分割一个流中的元素：</strong>你可以将一个流分割为两组——比如将任务分割为要做和已经做完的任务。</p>
+<li><p>**<hanla></hanla>分割一个流中的元素：**<hanla></hanla>你可以将一个流分割为两组——比如将任务分割为要做和已经做完的任务。</p>
 </li>
 </ol>
 <h2 id="Collector实际应用"><a href="#Collector实际应用" class="headerlink" title="Collector实际应用"></a>Collector<hanla></hanla>实际应用</h2><p>为了感受到<hanla></hanla><code>Collector</code><hanla></hanla>的威力，让我们来看一下我们要根据任务类型来对任务进行分类的例子。在<hanla></hanla>Java8<hanla></hanla>中，我们可以通过编写如下的代码达到将任务根据类型分组的目的。<strong>请参考<a href="./03-streams.md">第二天</a>的博文，也就是我们讨论的在这一系列文章中我们将使用的任务域。</strong></p>
@@ -418,7 +418,7 @@ html ul > hanla {
   <div class="license-box my-3">
     <div class="license-title">
       <div>Java8-Collectors</div>
-      <div>http://ysocks.gitee.io/2020/04/16/Collectors/</div>
+      <div>http://ysocket.pages.dev/2020/04/16/Collectors/</div>
     </div>
     <div class="license-meta">
       

@@ -15,7 +15,7 @@
     <meta name="description" content="由于实际的开发当中，可能存在多个项目的情况，如果是在本地自行搭建的坏境的话，就很有可能需要使用多个域名了，当然，也可以是 localhost / localhost:81 / localhost:82 这样来访问多个项目。其实，有更加便捷的方法（忽略自行修改/etc/hosts，这种哈，会改死人的），使用一个管理dns的工具： dnsmasq。    安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mac 下安装 dnsmasq 来配置开发环境">
-<meta property="og:url" content="http://ysocks.gitee.io/2020/09/26/Mac-install-dnsmasq/index.html">
+<meta property="og:url" content="http://ysocket.pages.dev/2020/09/26/Mac-install-dnsmasq/index.html">
 <meta property="og:site_name" content="YSocket's Blog">
 <meta property="og:description" content="由于实际的开发当中，可能存在多个项目的情况，如果是在本地自行搭建的坏境的话，就很有可能需要使用多个域名了，当然，也可以是 localhost / localhost:81 / localhost:82 这样来访问多个项目。其实，有更加便捷的方法（忽略自行修改/etc/hosts，这种哈，会改死人的），使用一个管理dns的工具： dnsmasq。    安装">
 <meta property="og:locale" content="zh_CN">
@@ -68,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"ysocks.gitee.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2025-06-16T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"ysocket.pages.dev","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2025-06-16T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -102,7 +102,7 @@ html ol > hanla,
 html ul > hanla {
     display: none;
 }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="YSocket's Blog" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="YSocket's Blog" type="application/atom+xml">
 </head>
 
 
@@ -293,28 +293,36 @@ html ul > hanla {
                 
                 <p>由于实际的开发当中，可能存在多个项目的情况，如果是在本地自行搭建的坏境的话，就很有可能需要使用多个域名了，当然，也可以是 localhost / localhost:81 / localhost:82 这样来访问多个项目。其实，有更加便捷的方法（忽略自行修改<hanla></hanla>/etc/hosts，这种哈，会改死人的），使用一个管理<hanla></hanla>dns<hanla></hanla>的工具： dnsmasq。  </p>
 <ul>
-<li>安装 dnsmasq  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">brew install dnsmasq<br></code></pre></td></tr></tbody></table></figure></li>
+<li>安装 dnsmasq</li>
 </ul>
+<figure class="highlight zsh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">brew install dnsmasq<br></code></pre></td></tr></tbody></table></figure>
+
 <span id="more"></span>
 
 <ul>
-<li><p>编辑配置文件 &nbsp;<br><code>vi /usr/local/etc/dnsmasq.conf</code> 修改内容:&nbsp;</p>
-<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">resolv-file</span>=<span class="hljs-string">/usr/local/etc/resolv.dnsmasq.conf</span><br><span class="hljs-attr">addn-hosts</span>=<span class="hljs-string">/etc/dnsmasq.hosts</span><br><span class="hljs-attr">strict-order</span><br></code></pre></td></tr></tbody></table></figure></li>
-<li><p>创建文件 <code>vi /usr/local/etc/resolv.dnsmasq.conf</code>  并添加内容:</p>
-<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">listen-address</span>=<span class="hljs-string">0.0.0.0</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">114.114.114.114</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">221.228.255.1</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">223.5.5.5</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">223.6.6.6</span><br></code></pre></td></tr></tbody></table></figure></li>
-<li><p>开发环境配置  </p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">vi /usr/local/etc/dnsmasq.conf<br></code></pre></td></tr></tbody></table></figure>
+<li>编辑配置文件 &nbsp;<br><code>vi /usr/local/etc/dnsmasq.conf</code> 修改内容:</li>
+</ul>
+<p>&nbsp;</p>
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">resolv-file</span>=<span class="hljs-string">/usr/local/etc/resolv.dnsmasq.conf</span><br><span class="hljs-attr">addn-hosts</span>=<span class="hljs-string">/etc/dnsmasq.hosts</span><br><span class="hljs-attr">strict-order</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>创建文件 <code>vi /usr/local/etc/resolv.dnsmasq.conf</code>  并添加内容:</li>
+</ul>
+<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">listen-address</span>=<span class="hljs-string">0.0.0.0</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">114.114.114.114</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">221.228.255.1</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">223.5.5.5</span><br><span class="hljs-attr">nameserver</span> <span class="hljs-string">223.6.6.6</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>开发环境配置</li>
+</ul>
+<figure class="highlight zsh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">vi /usr/local/etc/dnsmasq.conf<br></code></pre></td></tr></tbody></table></figure>
 <p>修改内容:&nbsp;</p>
 <figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">#dev-server</span><br><span class="hljs-attr">address</span>=/xyz.local/<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span> <span class="hljs-comment">#这样的意思就是访问 *.xyz.local 直接引导到 127.0.0.1</span><br></code></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>重启<hanla></hanla>dnsmasq<br><code>sudo brew services restart dnsmasq</code></p>
-</li>
+
+<ul>
+<li>重启<hanla></hanla>dnsmasq<br><code>sudo brew services restart dnsmasq</code></li>
 </ul>
 <p>最后<hanla></hanla>wifi<hanla></hanla>的<hanla></hanla>dns<hanla></hanla>只要配置一个<hanla></hanla>127.0.0.1<hanla></hanla>即可</p>
 <ul>
-<li>测试  <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">ping abc.xyz.local<br></code></pre></td></tr></tbody></table></figure></li>
+<li>测试</li>
 </ul>
-
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">ping abc.xyz.local<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
@@ -341,7 +349,7 @@ html ul > hanla {
   <div class="license-box my-3">
     <div class="license-title">
       <div>Mac 下安装 dnsmasq 来配置开发环境<hanla></hanla></div>
-      <div>http://ysocks.gitee.io/2020/09/26/Mac-install-dnsmasq/</div>
+      <div>http://ysocket.pages.dev/2020/09/26/Mac-install-dnsmasq/</div>
     </div>
     <div class="license-meta">
       
