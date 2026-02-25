@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>告别 DNS 污染与封锁：手把手教你免费搭建独享 Cloudflare DoH 服务器</title>
+    <link href="/2026/02/25/create-dns-server-with-cloudflare/"/>
+    <url>/2026/02/25/create-dns-server-with-cloudflare/</url>
+    
+    <content type="html"><![CDATA[<p>这是一个非常实用的技术话题！通过 Cloudflare Zero Trust 的功能，我们可以获取到一个独享的、不被墙的 DoH 地址，完美解决官方 <code>one.one.one.one</code> 在国内部分网络环境下无法访问的问题。</p><p>以下是为您撰写的博客文章草稿：<br>在国内上网，我们经常会遇到 DNS 污染或者官方 DNS 服务器（如 <code>one.one.one.one</code>）无法连接的问题。这不仅导致网页打不开，还可能带来隐私泄露的风险。</p><p>今天，我将教你一个“骚操作”：利用 Cloudflare 的 Zero Trust 服务，免费创建一个<strong>独享的、全球可访问</strong>的 DNS over HTTPS (DoH) 服务器。这个地址不仅不仅独属于你，而且能有效解决官方地址被屏蔽的烦恼！</p><h2 id="为什么选择这个方案？"><a href="#为什么选择这个方案？" class="headerlink" title="为什么选择这个方案？"></a>为什么选择这个方案？</h2><ol><li><strong>完全免费</strong>：Cloudflare 提供的这项服务对个人用户免费。</li><li><strong>独享地址</strong>：你将获得一个形如 <code>https://xxxxxx.cloudflare-gateway.com/dns-query</code> 的专属地址，不像公共 DNS 那样拥挤。</li><li><strong>抗干扰</strong>：官方的 <code>one.one.one.one</code> 经常被阻断，但 Cloudflare Gateway 的随机域名通常可以畅通无阻。</li><li><strong>隐私安全</strong>：加密传输，防止运营商劫持和窥探。</li></ol><h2 id="具体操作步骤"><a href="#具体操作步骤" class="headerlink" title="具体操作步骤"></a>具体操作步骤</h2><p>准备工作：你需要一个 Cloudflare 账号。如果没有，请先注册一个。</p><h3 id="第一步：进入控制面板"><a href="#第一步：进入控制面板" class="headerlink" title="第一步：进入控制面板"></a>第一步：进入控制面板</h3><ol><li>登录你的 Cloudflare 账号。</li><li>在浏览器地址栏直接访问 Cloudflare Zero Trust 的仪表盘：<br> <strong><a href="https://one.dash.cloudflare.com/">https://one.dash.cloudflare.com/</a></strong></li></ol><h3 id="第二步：找到“解析程序和代理”"><a href="#第二步：找到“解析程序和代理”" class="headerlink" title="第二步：找到“解析程序和代理”"></a>第二步：找到“解析程序和代理”</h3><p>进入仪表盘后，点击左侧菜单栏：</p><ol><li>点击 <strong>“网络”</strong>。</li><li>在展开的子菜单中，找到并点击 <strong>“解析程序和代理”</strong>。</li></ol><h3 id="第三步：配置-DNS-位置"><a href="#第三步：配置-DNS-位置" class="headerlink" title="第三步：配置 DNS 位置"></a>第三步：配置 DNS 位置</h3><p>在“解析程序和代理”页面中，你会看到 <strong>DNS 位置</strong> 选项卡。</p><ol><li>点击默认的位置名称：<strong>Default Location</strong>。</li><li>点击右侧或旁边的 <strong>“配置”</strong> 按钮。</li></ol><h3 id="第四步：开启-DoH-并获取地址"><a href="#第四步：开启-DoH-并获取地址" class="headerlink" title="第四步：开启 DoH 并获取地址"></a>第四步：开启 DoH 并获取地址</h3><p>进入配置页面后，你会看到类似下方的界面设置。请按照以下说明操作：</p><p><strong>1. 启用 IPv6 DNS（可选但推荐）</strong><br>在 “DNS endpoints” 区域，找到 <strong>IPv6 DNS</strong> 并将其开关打开。<br><em>注意：系统会为你分配一个 IPv6 阻止列表 ID，例如 <code>2a06:98c1:54::2:3ac6</code>，这通常无需更改。</em></p><p><strong>2. 开启基于 HTTPS 的 DNS (DoH)</strong><br>这是最关键的一步！找到 <strong>“基于 HTTPS 的 DNS (DoH)”</strong> 选项。</p><ul><li>将开关设置为 <strong>“开”</strong>。</li><li>此时，系统会自动生成一个专属的 DoH 地址。</li></ul><p><strong>界面参考示例：</strong></p><blockquote><p><em>基于 HTTPS 的 DNS (DoH)</em><br><em>开</em><br><em><code>https://**********.cloudflare-gateway.com/dns-query</code></em></p></blockquote><blockquote><p><strong>注意</strong>：上图中的 <code>**********</code> 是随机生成的字符，<strong>请复制你自己在页面上看到的那个地址</strong>。这就是你独享的 DoH 服务器地址！</p></blockquote><p><strong>3. 保存设置</strong><br>不要忘记滚动到页面底部，点击 <strong>“保存”</strong> 按钮。</p><h3 id="第五步：设置为默认位置（可选）"><a href="#第五步：设置为默认位置（可选）" class="headerlink" title="第五步：设置为默认位置（可选）"></a>第五步：设置为默认位置（可选）</h3><p>在页面下方的“默认 DNS 位置”区域，如果需要，你可以勾选“设置为默认 DNS 位置”。这通常用于 Cloudflare WARP 客户端的设备策略，如果你只是在浏览器或路由器使用该 DoH 地址，这一步可以跳过。</p><hr><h2 id="如何使用这个独享-DoH-地址？"><a href="#如何使用这个独享-DoH-地址？" class="headerlink" title="如何使用这个独享 DoH 地址？"></a>如何使用这个独享 DoH 地址？</h2><p>成功获取地址后（例如 <code>https://**********.cloudflare-gateway.com/dns-query</code>），你可以在任何支持 DoH 的设备上配置它。</p><h3 id="方法-1：浏览器配置（以-Chrome-为例）"><a href="#方法-1：浏览器配置（以-Chrome-为例）" class="headerlink" title="方法 1：浏览器配置（以 Chrome 为例）"></a>方法 1：浏览器配置（以 Chrome 为例）</h3><ol><li>打开 Chrome 设置 -&gt; 隐私和安全 -&gt; 安全。</li><li>滚动到底部，找到“使用安全 DNS”。</li><li>选择“使用”，并在下拉菜单中选择“自定义”。</li><li>粘贴你的 DoH 地址：<code>https://你的前缀.cloudflare-gateway.com/dns-query</code>。</li><li>保存即可。</li></ol><h3 id="方法-2：路由器-网关配置"><a href="#方法-2：路由器-网关配置" class="headerlink" title="方法 2：路由器&#x2F;网关配置"></a>方法 2：路由器&#x2F;网关配置</h3><p>如果你使用的是 OpenWrt、Padavan 或其他高阶路由器固件，可以在 DNS 设置中找到 DoH (DNS over HTTPS) 客户端选项，填入上述地址，即可实现全家网络 DNS 无污染。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这个方法，你不仅拥有了一个<strong>全球可访问</strong>的 DNS 服务器，还完美规避了 <code>one.one.one.one</code> 打不开的问题。Cloudflare 强大的全球网络能保证低延迟和高可用性。</p><p>赶紧去试试吧，享受干净、私密的上网体验！</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>doh</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>券商客服电话</title>
     <link href="/2026/02/25/stockBroker-service-teleNo/"/>
     <url>/2026/02/25/stockBroker-service-teleNo/</url>
@@ -89,9 +108,9 @@
     
     <tags>
       
-      <tag>spring cloud</tag>
-      
       <tag>feign</tag>
+      
+      <tag>spring cloud</tag>
       
     </tags>
     

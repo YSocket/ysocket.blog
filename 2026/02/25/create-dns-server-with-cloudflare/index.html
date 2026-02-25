@@ -12,27 +12,24 @@
   <meta name="author" content="YSocket">
   <meta name="keywords" content="YSocket">
   
-    <meta name="description" content="背景最近在使用 @RequestParam、@RequestBody 注解定义 feign 接口的时候出现一些使用上的问题，造成调用方启动的时候会报错 详细情况1.第一种情况，如下： 12@PostMapping(value = &quot;/hello2&quot;)BetaDto hello2(String name1); 接口有且只有一个 key/value 参数，此时可以不必在">
+    <meta name="description" content="这是一个非常实用的技术话题！通过 Cloudflare Zero Trust 的功能，我们可以获取到一个独享的、不被墙的 DoH 地址，完美解决官方&nbsp;one.one.one.one&nbsp;在国内部分网络环境下无法访问的问题。 以下是为您撰写的博客文章草稿：在国内上网，我们经常会遇到 DNS 污染或者官方 DNS 服务器（如&nbsp;one.one.one.one）无法连接的问题。这不仅导致网页打不开，还可能带来">
 <meta property="og:type" content="article">
-<meta property="og:title" content="@FeignClient导致 RequestParam.value() was empty">
-<meta property="og:url" content="http://ysocket.pages.dev/2023/12/12/FeignClient-RequestParam-value-was-empty/index.html">
+<meta property="og:title" content="告别 DNS 污染与封锁：手把手教你免费搭建独享 Cloudflare DoH 服务器">
+<meta property="og:url" content="http://ysocket.pages.dev/2026/02/25/create-dns-server-with-cloudflare/index.html">
 <meta property="og:site_name" content="YSocket's Blog">
-<meta property="og:description" content="背景最近在使用 @RequestParam、@RequestBody 注解定义 feign 接口的时候出现一些使用上的问题，造成调用方启动的时候会报错 详细情况1.第一种情况，如下： 12@PostMapping(value = &quot;/hello2&quot;)BetaDto hello2(String name1); 接口有且只有一个 key/value 参数，此时可以不必在">
+<meta property="og:description" content="这是一个非常实用的技术话题！通过 Cloudflare Zero Trust 的功能，我们可以获取到一个独享的、不被墙的 DoH 地址，完美解决官方&nbsp;one.one.one.one&nbsp;在国内部分网络环境下无法访问的问题。 以下是为您撰写的博客文章草稿：在国内上网，我们经常会遇到 DNS 污染或者官方 DNS 服务器（如&nbsp;one.one.one.one）无法连接的问题。这不仅导致网页打不开，还可能带来">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://ysocket.pages.dev/images/pasted-27.png">
-<meta property="article:published_time" content="2023-12-12T08:13:00.000Z">
-<meta property="article:modified_time" content="2025-05-16T14:43:16.187Z">
+<meta property="article:published_time" content="2026-02-25T06:38:00.000Z">
+<meta property="article:modified_time" content="2026-02-25T06:38:48.464Z">
 <meta property="article:author" content="YSocket">
-<meta property="article:tag" content="feign">
-<meta property="article:tag" content="spring cloud">
+<meta property="article:tag" content="doh">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://ysocket.pages.dev/images/pasted-27.png">
   
   
   
     <meta name="google-adsense-account" content="ca-pub-7633749022239211">
   
-  <title>@FeignClient导致 RequestParam.value() was empty - YSocket's Blog</title>
+  <title>告别 DNS 污染与封锁：手把手教你免费搭建独享 Cloudflare DoH 服务器 - YSocket's Blog</title>
 
   <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css">
 
@@ -217,7 +214,7 @@ html ul > hanla {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="@FeignClient导致 RequestParam.value() was empty"></span>
+            <span id="subtitle" data-typed-text="告别 DNS 污染与封锁：手把手教你免费搭建独享 Cloudflare DoH 服务器"></span>
           
         </div>
 
@@ -228,8 +225,8 @@ html ul > hanla {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-12 16:13" pubdate="">
-          2023<hanla></hanla>年<hanla></hanla>12<hanla></hanla>月<hanla></hanla>12<hanla></hanla>日 下午
+        <time datetime="2026-02-25 14:38" pubdate="">
+          2026<hanla></hanla>年<hanla></hanla>2<hanla></hanla>月<hanla></hanla>25<hanla></hanla>日 下午
         </time>
       </span>
     
@@ -240,7 +237,7 @@ html ul > hanla {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          404 字
+          1k 字
         
       </span>
     
@@ -251,7 +248,7 @@ html ul > hanla {
         
         
         
-          4 分钟
+          9 分钟
         
       </span>
     
@@ -288,36 +285,63 @@ html ul > hanla {
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">@FeignClient<hanla></hanla>导致 RequestParam.value() was empty</h1>
+            <h1 id="seo-header">告别 DNS 污染与封锁：手把手教你免费搭建独享 Cloudflare DoH 服务器</h1>
             
             
               <div class="markdown-body">
                 
-                <h5 id="背景"><a href="#背景" class="headerlink" title="背景"></a><hanla></hanla>背景</h5><p>最近在使用 @RequestParam、@RequestBody 注解定义 feign 接口的时候出现一些使用上的问题，造成调用方启动的时候会报错</p>
-<h5 id="详细情况"><a href="#详细情况" class="headerlink" title="详细情况"></a>详细情况<hanla></hanla></h5><p>1.<hanla></hanla>第一种情况，如下：</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(value = "/hello2")</span><br>BetaDto <span class="hljs-title function_">hello2</span><span class="hljs-params">(String name1)</span>;<br></code></pre></td></tr></tbody></table></figure>
-<p>接口有且只有一个 key/value 参数，此时可以不必在 name1 参数上使用 @RequestParam 注解。通过 Feign 调用该接口的调用方可以正常启动。</p>
-<p>2.<hanla></hanla>第二种情况，如下：</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(value = "/hello2")</span><br>BetaDto <span class="hljs-title function_">hello2</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> String name1)</span>;<br></code></pre></td></tr></tbody></table></figure>
-<p>接口有且只有一个 key/value 参数，此时如果对 name1 参数上使用 @RequestParam 注解，此时通过 Feign 调用该接口的调用方可启动的时候回抛出如下错误：</p>
-<figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Caused <span class="hljs-keyword">by</span>: java.lang.IllegalStateException: RequestParam.<span class="hljs-built_in">value</span>() was <span class="hljs-literal">empty</span> <span class="hljs-keyword">on</span> <span class="hljs-title">parameter</span> <span class="hljs-title">0</span><br></code></pre></td></tr></tbody></table></figure>
-<p>意思是 @RequestParam 的 value 值不允许为空，正确的姿势如下：</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(value = "/hello2")</span><br>BetaDto <span class="hljs-title function_">hello2</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam("name1")</span> String name1)</span>;<br></code></pre></td></tr></tbody></table></figure>
-
-<p>3.<hanla></hanla>第三种情况，如下：</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(value = "/hello2")</span><br>BetaDto <span class="hljs-title function_">hello2</span><span class="hljs-params">(String name1, String name2)</span>;<br></code></pre></td></tr></tbody></table></figure>
-<p>接口存在多个 key/value 参数，此时通过 Feign 调用该接口的调用方启动的时候会抛出如下错误：</p>
-<figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">Caused <span class="hljs-keyword">by</span>: java.lang.IllegalStateException: <span class="hljs-keyword">Method</span> <span class="hljs-title function_">has</span> <span class="hljs-title function_">too</span> <span class="hljs-title function_">many</span> <span class="hljs-title function_">Body</span> <span class="hljs-title function_">parameters</span><br></code></pre></td></tr></tbody></table></figure>
-<p>像这种多参数（key/value）的情况必须为每个参数增加 @RequestParam 注解，正确的姿势如下：</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(value = "/hello2")</span><br>BetaDto <span class="hljs-title function_">hello2</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(“name1”)</span>  String name1, <span class="hljs-meta">@RequestParam(“name2”)</span>  String name2)</span>;<br></code></pre></td></tr></tbody></table></figure>
-
-
-<h5 id="终极办法："><a href="#终极办法：" class="headerlink" title="终极办法："></a>终极办法：</h5><p>在<hanla></hanla>pom.xml<hanla></hanla>的<hanla></hanla>maven-compiler-plugin<hanla></hanla>插件中添加配置<hanla></hanla>parameters</p>
-<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">parameters</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">parameters</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br></code></pre></td></tr></tbody></table></figure>
-
-<p>Spring<hanla></hanla>框架<hanla></hanla><br>SpringBoot<hanla></hanla>项目如果继承自<hanla></hanla>spring-boot-starter-parent，会默认开启。</p>
-<p><img src="/images/pasted-27.png" srcset="/img/loading.gif" lazyload alt="upload successful"></p>
-<p>来自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/yangchao1125/article/details/104356936">Feign 中使用 @RequestParam、@RequestBody 的正确姿势<hanla></hanla></a></p>
+                <p>这是一个非常实用的技术话题！通过 Cloudflare Zero Trust 的功能，我们可以获取到一个独享的、不被墙的 DoH 地址，完美解决官方&nbsp;<code>one.one.one.one</code>&nbsp;在国内部分网络环境下无法访问的问题。</p>
+<p>以下是为您撰写的博客文章草稿：<br>在国内上网，我们经常会遇到 DNS 污染或者官方 DNS 服务器（如&nbsp;<code>one.one.one.one</code>）无法连接的问题。这不仅导致网页打不开，还可能带来隐私泄露的风险。</p>
+<p>今天，我将教你一个<hanla></hanla>“骚操作”：利用 Cloudflare 的 Zero Trust 服务，免费创建一个<strong>独享的、全球可访问</strong>的 DNS over HTTPS (DoH) 服务器。这个地址不仅不仅独属于你，而且能有效解决官方地址被屏蔽的烦恼！</p>
+<h2 id="为什么选择这个方案？"><a href="#为什么选择这个方案？" class="headerlink" title="为什么选择这个方案？"></a>为什么选择这个方案？</h2><ol>
+<li><strong>完全免费</strong>：Cloudflare 提供的这项服务对个人用户免费。</li>
+<li><strong>独享地址</strong>：你将获得一个形如&nbsp;<code>https://xxxxxx.cloudflare-gateway.com/dns-query</code>&nbsp;的专属地址，不像公共 DNS 那样拥挤。</li>
+<li><strong>抗干扰</strong>：官方的&nbsp;<code>one.one.one.one</code>&nbsp;经常被阻断，但 Cloudflare Gateway 的随机域名通常可以畅通无阻。</li>
+<li><strong>隐私安全</strong>：加密传输，防止运营商劫持和窥探。</li>
+</ol>
+<h2 id="具体操作步骤"><a href="#具体操作步骤" class="headerlink" title="具体操作步骤"></a>具体操作步骤</h2><p>准备工作：你需要一个 Cloudflare 账号。如果没有，请先注册一个。</p>
+<h3 id="第一步：进入控制面板"><a href="#第一步：进入控制面板" class="headerlink" title="第一步：进入控制面板"></a>第一步：进入控制面板</h3><ol>
+<li>登录你的 Cloudflare 账号。</li>
+<li>在浏览器地址栏直接访问 Cloudflare Zero Trust 的仪表盘：<br> <strong><a target="_blank" rel="noopener" href="https://one.dash.cloudflare.com/">https://one.dash.cloudflare.com/</a></strong></li>
+</ol>
+<h3 id="第二步：找到“解析程序和代理”"><a href="#第二步：找到“解析程序和代理”" class="headerlink" title="第二步：找到“解析程序和代理”"></a>第二步：找到<hanla></hanla>“解析程序和代理”</h3><p><hanla></hanla>进入仪表盘后，点击左侧菜单栏：</p>
+<ol>
+<li>点击&nbsp;<strong>“网络”</strong>。</li>
+<li>在展开的子菜单中，找到并点击&nbsp;<strong>“解析程序和代理”</strong>。</li>
+</ol>
+<h3 id="第三步：配置-DNS-位置"><a href="#第三步：配置-DNS-位置" class="headerlink" title="第三步：配置 DNS 位置"></a>第三步：配置 DNS 位置</h3><p>在<hanla></hanla>“解析程序和代理”<hanla></hanla>页面中，你会看到&nbsp;<strong>DNS 位置</strong>&nbsp;选项卡。</p>
+<ol>
+<li>点击默认的位置名称：<strong>Default Location</strong>。</li>
+<li>点击右侧或旁边的&nbsp;<strong>“配置”</strong>&nbsp;按钮。</li>
+</ol>
+<h3 id="第四步：开启-DoH-并获取地址"><a href="#第四步：开启-DoH-并获取地址" class="headerlink" title="第四步：开启 DoH 并获取地址"></a>第四步：开启 DoH 并获取地址</h3><p>进入配置页面后，你会看到类似下方的界面设置。请按照以下说明操作：</p>
+<p><strong>1. 启用 IPv6 DNS（可选但推荐）</strong><br>在 “DNS endpoints” 区域，找到&nbsp;<strong>IPv6 DNS</strong>&nbsp;并将其开关打开。<br><em>注意：系统会为你分配一个 IPv6 阻止列表 ID，例如&nbsp;<code>2a06:98c1:54::2:3ac6</code>，这通常无需更改。</em></p>
+<p><strong>2. 开启基于 HTTPS 的 DNS (DoH)</strong><br><hanla></hanla>这是最关键的一步！找到&nbsp;<strong>“基于 HTTPS 的 DNS (DoH)”</strong>&nbsp;选项。</p>
+<ul>
+<li>将开关设置为&nbsp;<strong>“开”</strong>。</li>
+<li>此时，系统会自动生成一个专属的 DoH 地址。</li>
+</ul>
+<p><strong>界面参考示例：</strong></p>
+<blockquote>
+<p><em>基于 HTTPS 的 DNS (DoH)</em><br><em><hanla></hanla>开<hanla></hanla></em><br><em><code>https://**********.cloudflare-gateway.com/dns-query</code></em></p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>：上图中的&nbsp;<code>**********</code>&nbsp;是随机生成的字符，<strong>请复制你自己在页面上看到的那个地址</strong>。这就是你独享的 DoH 服务器地址！</p>
+</blockquote>
+<p><strong>3. 保存设置</strong><br>不要忘记滚动到页面底部，点击&nbsp;<strong>“保存”</strong>&nbsp;按钮。</p>
+<h3 id="第五步：设置为默认位置（可选）"><a href="#第五步：设置为默认位置（可选）" class="headerlink" title="第五步：设置为默认位置（可选）"></a>第五步：设置为默认位置（可选）</h3><p>在页面下方的<hanla></hanla>“默认 DNS 位置”<hanla></hanla>区域，如果需要，你可以勾选<hanla></hanla>“设置为默认 DNS 位置”。这通常用于 Cloudflare WARP 客户端的设备策略，如果你只是在浏览器或路由器使用该 DoH 地址，这一步可以跳过。</p>
+<hr>
+<h2 id="如何使用这个独享-DoH-地址？"><a href="#如何使用这个独享-DoH-地址？" class="headerlink" title="如何使用这个独享 DoH 地址？"></a>如何使用这个独享 DoH 地址？</h2><p>成功获取地址后（例如&nbsp;<code>https://**********.cloudflare-gateway.com/dns-query</code>），你可以在任何支持 DoH 的设备上配置它。</p>
+<h3 id="方法-1：浏览器配置（以-Chrome-为例）"><a href="#方法-1：浏览器配置（以-Chrome-为例）" class="headerlink" title="方法 1：浏览器配置（以 Chrome 为例）"></a>方法 1：浏览器配置（以 Chrome 为例）</h3><ol>
+<li>打开 Chrome 设置 -&gt; 隐私和安全 -&gt; 安全。</li>
+<li>滚动到底部，找到<hanla></hanla>“使用安全 DNS”。</li>
+<li>选择<hanla></hanla>“使用”，并在下拉菜单中选择<hanla></hanla>“自定义”。</li>
+<li>粘贴你的 DoH 地址：<code>https://<hanla></hanla>你的前缀.cloudflare-gateway.com/dns-query</code>。</li>
+<li>保存即可。</li>
+</ol>
+<h3 id="方法-2：路由器-网关配置"><a href="#方法-2：路由器-网关配置" class="headerlink" title="方法 2：路由器/网关配置"></a>方法 2：路由器<hanla></hanla>/<hanla></hanla>网关配置</h3><p>如果你使用的是 OpenWrt、Padavan 或其他高阶路由器固件，可以在 DNS 设置中找到 DoH (DNS over HTTPS) 客户端选项，填入上述地址，即可实现全家网络 DNS 无污染。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这个方法，你不仅拥有了一个<strong>全球可访问</strong>的 DNS 服务器，还完美规避了&nbsp;<code>one.one.one.one</code>&nbsp;打不开的问题。Cloudflare 强大的全球网络能保证低延迟和高可用性。</p>
+<p>赶紧去试试吧，享受干净、私密的上网体验！</p>
 
                 
               </div>
@@ -326,34 +350,11 @@ html ul > hanla {
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/feign/" class="category-chain-item">feign</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/feign/" class="print-no-link">#feign</a>
-      
-        <a href="/tags/spring-cloud/" class="print-no-link">#spring cloud</a>
+        <a href="/tags/doh/" class="print-no-link">#doh</a>
       
     </div>
   
@@ -365,8 +366,8 @@ html ul > hanla {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>@FeignClient<hanla></hanla>导致 RequestParam.value() was empty</div>
-      <div>http://ysocket.pages.dev/2023/12/12/FeignClient-RequestParam-value-was-empty/</div>
+      <div><hanla></hanla>告别 DNS 污染与封锁：手把手教你免费搭建独享 Cloudflare DoH 服务器<hanla></hanla></div>
+      <div>http://ysocket.pages.dev/2026/02/25/create-dns-server-with-cloudflare/</div>
     </div>
     <div class="license-meta">
       
@@ -378,13 +379,13 @@ html ul > hanla {
       
         <div class="license-meta-item license-meta-date">
           <div><hanla></hanla>发布于<hanla></hanla></div>
-          <div>2023<hanla></hanla>年<hanla></hanla>12<hanla></hanla>月<hanla></hanla>12<hanla></hanla>日</div>
+          <div>2026<hanla></hanla>年<hanla></hanla>2<hanla></hanla>月<hanla></hanla>25<hanla></hanla>日</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>许可协议<hanla></hanla></div>
+          <div>许可协议</div>
           <div>
             
               
@@ -410,18 +411,12 @@ html ul > hanla {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/16/Mac-smartdns-DOH/" title="MacOS 配置 DNS Over HTTPS">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MacOS 配置 DNS Over HTTPS</span>
-                        <span class="visible-mobile"><hanla></hanla>上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/11/A-method-overriding-another-method-must-not-redefine-the-parameter-constraint-configuration/" title="关于A method overriding another method must not redefine the parameter constraint configuration解决方法">
-                        <span class="hidden-mobile">关于<hanla></hanla>A method overriding another method must not redefine the parameter constraint configuration<hanla></hanla>解决方法</span>
+                      <a href="/2026/02/25/stockBroker-service-teleNo/" title="券商客服电话">
+                        <span class="hidden-mobile">券商客服电话</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
